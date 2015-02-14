@@ -7,6 +7,7 @@ class MoviesController < ApplicationController
   end
 
   def index
+     #redirect = false
     @movies = Movie.find(:all, :order => (params[:sort_by]))
     if params[:ratings]
       @movies = Movie.where(:rating => params[:ratings].keys).find(:all, :order => (params[:sort_by]))
