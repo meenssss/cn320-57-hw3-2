@@ -1,17 +1,21 @@
 class MoviesController < ApplicationController
 
-  def show
-    id = params[:id] # retrieve movie ID from URI route
-    @movie = Movie.find(id) # look up movie by unique ID
-    # will render app/views/movies/show.<extension> by default
+  def initialize
+        @all_ratings = Movie.all_ratings
+        super
   end
 
+    def show
+        id = params[:id] # retrieve movie ID from URI route
+        @movie = Movie.find(id) # look up movie by unique ID
+        # will render app/views/movies/show.<extension> by default
+    end
+
   def index
-   
-    @all_ratings = Movie.all_ratings
-      redirect = false
+    redirect = false
       
     logger.debug(session.inspect)
+    
     if params[:sort_by]  
     @sort_by = params[:sort_by]
     session[:sort_by] = params[:sort_by]
@@ -53,10 +57,11 @@ class MoviesController < ApplicationController
        @ratings = Hash.new
     end
   end
+  
 
-  def new
-    # default: render 'new' template
-  end
+    def new
+        # default: render 'new' template
+    end
 
   def create
     @movie = Movie.create!(params[:movie])
